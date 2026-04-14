@@ -1,0 +1,28 @@
+package co.edu.usbcali.ecommerceusb.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.OffsetDateTime;
+
+@Entity
+@Table(name = "document_types", schema = "public")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DocumentType {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "code", nullable = false, unique = true)
+    private String code;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private OffsetDateTime createdAt;
+}
