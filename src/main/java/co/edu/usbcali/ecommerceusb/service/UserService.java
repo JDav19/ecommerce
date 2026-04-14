@@ -1,6 +1,5 @@
 package co.edu.usbcali.ecommerceusb.service;
 
-import co.edu.usbcali.ecommerceusb.model.User;
 import co.edu.usbcali.ecommerceusb.dto.UserResponse;
 
 import java.util.List;

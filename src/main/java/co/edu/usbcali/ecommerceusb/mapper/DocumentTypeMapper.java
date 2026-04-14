@@ -3,7 +3,6 @@ package co.edu.usbcali.ecommerceusb.mapper;
 import co.edu.usbcali.ecommerceusb.dto.DocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentTypeMapper {
@@ -16,13 +15,12 @@ public class DocumentTypeMapper {
                 .build();
     }
 
-
     /*
-    * Este método va a iterar una lista de DocumentType y la va a convertir en
-    *         una lista documentTypeResponse */
+     * Este método va a iterar una lista de DocumentType y la va a convertir en
+     *         una lista de documentTypeResponse */
     public static List<DocumentTypeResponse> modelToDocumentTypeResponseList(
             List<DocumentType> documentTypes) {
-        // Implementacion usando for each
+        // Implementación usando for each
         /*List<DocumentTypeResponse> documentTypeResponseList = new ArrayList<>();
         for(DocumentType documentType : documentTypes) {
             DocumentTypeResponse documentTypeResponse = modelToDocumentTypeResponse(documentType);

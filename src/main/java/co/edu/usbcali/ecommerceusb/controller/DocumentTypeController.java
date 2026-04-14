@@ -23,6 +23,8 @@ public class DocumentTypeController {
 
     @GetMapping("/all")
     public List<DocumentTypeResponse> getAll() {
+        // Invoca el Mapper para convertir la lista de DocumentType
+        // a una lista de DocumentTypeResponse
         return DocumentTypeMapper.modelToDocumentTypeResponseList(
                 documentTypeRepository.findAll()
         );
@@ -30,7 +32,7 @@ public class DocumentTypeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DocumentTypeResponse> getById(@PathVariable Integer id) {
-        //Consultar el Document Type
+        // Consultar el Document Type en la base de datos
         DocumentType documentType = documentTypeRepository.getReferenceById(id);
 
         // Mapear o convertir al DTO (Response) DocumentTypeResponse

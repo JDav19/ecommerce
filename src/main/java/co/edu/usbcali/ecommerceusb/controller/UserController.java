@@ -14,14 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-
 public class UserController {
+    // Inyección de dependencias de UserService
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/all")
-    public List<UserResponse> getAll(){
+    public List<UserResponse> getAll() {
         return userService.getUsers();
     }
 
@@ -30,5 +29,4 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(id),
                 HttpStatus.OK);
     }
-
 }
