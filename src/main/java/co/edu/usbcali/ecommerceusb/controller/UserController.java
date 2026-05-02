@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) throws Exception{
-        return new ResponseEntity <> (userService.getUserByEmail(email),
+    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) throws Exception {
+        return new ResponseEntity<>(userService.getUserByEmail(email),
                 HttpStatus.OK);
     }
 
@@ -41,5 +41,3 @@ public class UserController {
                 HttpStatus.CREATED);
     }
 }
-
-//dto request para crear usuario,

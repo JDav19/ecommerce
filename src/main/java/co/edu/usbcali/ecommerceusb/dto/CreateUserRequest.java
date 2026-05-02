@@ -1,7 +1,6 @@
 package co.edu.usbcali.ecommerceusb.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 @lombok.Getter

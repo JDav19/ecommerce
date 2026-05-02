@@ -5,7 +5,6 @@ import co.edu.usbcali.ecommerceusb.dto.UserResponse;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
 import co.edu.usbcali.ecommerceusb.model.User;
 
-import javax.swing.text.Document;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +34,7 @@ public class UserMapper {
 
     public static User createUserRequestToUser(CreateUserRequest createUserRequest,
                                                DocumentType documentType) {
-        // Convertir el objeto createUserRequest a User
+        // Convertir el objeto createUserRequest a User y retornamos ese user
         return User.builder()
                 .fullName(createUserRequest.getFullName())
                 .phone(createUserRequest.getPhone())
@@ -50,6 +49,5 @@ public class UserMapper {
                 .createdAt(OffsetDateTime.now())
                 .updatedAt(OffsetDateTime.now())
                 .build();
-
     }
 }
