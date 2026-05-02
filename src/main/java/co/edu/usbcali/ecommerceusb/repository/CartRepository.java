@@ -4,6 +4,10 @@ import co.edu.usbcali.ecommerceusb.model.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface CartRepository {
+public interface CartRepository extends JpaRepository<Cart, Integer> {
+    // Busca carritos por el ID del usuario
+    List<Cart> findByUserId(Integer userId);
 }
