@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CreateCategoryRequest {
     private String name;
-    private Integer parentId; // Puede ser null si es una categoría principal
+    private Integer parentId;
 }

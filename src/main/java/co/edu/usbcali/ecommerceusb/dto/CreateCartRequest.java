@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CreateCartRequest {
     private Integer userId;
-    private String status; // Ejemplo: "ACTIVE", "COMPLETED"
+    private String status;
 }
