@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
+import co.edu.usbcali.ecommerceusb.dto.CreateDocumentTypeRequest;
 import co.edu.usbcali.ecommerceusb.dto.DocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.mapper.DocumentTypeMapper;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
@@ -47,5 +48,12 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
         DocumentTypeResponse documentTypeResponse = DocumentTypeMapper.modelToDocumentTypeResponse(documentType);
         // Retornar tipo de documento encontrado
         return documentTypeResponse;
+    }
+
+    @Override
+    public DocumentTypeResponse createDocumentType(CreateDocumentTypeRequest request) throws Exception {
+        // Podrías validar si el código ya existe para evitar el error de base de datos
+        DocumentType documentType = DocumentTypeMapper.createRequestToModel(request);
+        return DocumentTypeMapper.modelToDocumentTypeResponse(documentTypeRepository.save(documentType));
     }
 }

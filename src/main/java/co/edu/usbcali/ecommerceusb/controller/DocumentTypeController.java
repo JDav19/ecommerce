@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
+import co.edu.usbcali.ecommerceusb.dto.CreateDocumentTypeRequest;
 import co.edu.usbcali.ecommerceusb.dto.DocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.mapper.DocumentTypeMapper;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
@@ -7,10 +8,7 @@ import co.edu.usbcali.ecommerceusb.repository.DocumentTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +42,21 @@ public class DocumentTypeController {
         return new ResponseEntity<>(
                 documentTypeResponse,
                 HttpStatus.OK
+        );
+    }
+
+    @PostMapping
+    public ResponseEntity<DocumentTypeResponse> create(@RequestBody CreateDocumentTypeRequest request) {
+        // 1. Usamos el Mapper para convertir el DTO de entrada al Modelo
+        DocumentType documentType = DocumentTypeMapper.createRequestToModel(request);
+
+        // 2. Guardamos directamente usando el repository
+        documentType = documentTypeRepository.save(documentType);
+
+        // 3. Convertimos el resultado a Response y respondemos
+        return new ResponseEntity<>(
+                DocumentTypeMapper.modelToDocumentTypeResponse(documentType),
+                HttpStatus.CREATED
         );
     }
 }
