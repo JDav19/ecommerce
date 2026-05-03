@@ -1,0 +1,11 @@
+package co.edu.usbcali.ecommerceusb.service;
+
+import co.edu.usbcali.ecommerceusb.dto.CreatePaymentRequest;
+import co.edu.usbcali.ecommerceusb.dto.PaymentResponse;
+import java.util.List;
+
+public interface PaymentService {
+    List<PaymentResponse> findAll();
+    PaymentResponse findById(Integer id);
+    PaymentResponse create(CreatePaymentRequest request);
+}
