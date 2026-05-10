@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
-import co.edu.usbcali.ecommerceusb.dto.CreateUserRequest;
-import co.edu.usbcali.ecommerceusb.dto.UserResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateUserRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.UserResponse;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
 import co.edu.usbcali.ecommerceusb.model.User;
 

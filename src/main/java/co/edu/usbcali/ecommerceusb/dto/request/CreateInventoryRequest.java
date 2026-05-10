@@ -1,4 +1,4 @@
-package co.edu.usbcali.ecommerceusb.dto;
+package co.edu.usbcali.ecommerceusb.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CreateCartItemRequest {
-    private Integer cartId;
+public class CreateInventoryRequest {
     private Integer productId;
-    private Integer quantity;
+    private Integer stock;
 }

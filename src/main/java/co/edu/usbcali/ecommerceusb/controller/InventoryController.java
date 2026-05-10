@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
-import co.edu.usbcali.ecommerceusb.dto.InventoryResponse;
-import co.edu.usbcali.ecommerceusb.dto.CreateInventoryRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.InventoryResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service;
 
-import co.edu.usbcali.ecommerceusb.dto.InventoryResponse;
-import co.edu.usbcali.ecommerceusb.dto.CreateInventoryRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.InventoryResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryRequest;
 
 import java.util.List;
 

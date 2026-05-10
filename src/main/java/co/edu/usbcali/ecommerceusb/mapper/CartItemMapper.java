@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
-import co.edu.usbcali.ecommerceusb.dto.CartItemResponse;
-import co.edu.usbcali.ecommerceusb.dto.CreateCartItemRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.CartItemResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateCartItemRequest;
 import co.edu.usbcali.ecommerceusb.model.Cart;
 import co.edu.usbcali.ecommerceusb.model.CartItem;
 import co.edu.usbcali.ecommerceusb.model.Product;

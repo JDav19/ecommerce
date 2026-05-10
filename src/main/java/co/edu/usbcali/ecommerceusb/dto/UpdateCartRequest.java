@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CreateDocumentTypeRequest {
-    private String code;
-    private String name;
+public class UpdateCartRequest {
+    private Integer userId;
+    private String status;
 }

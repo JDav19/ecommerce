@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service;
 
-import co.edu.usbcali.ecommerceusb.dto.CreateDocumentTypeRequest;
-import co.edu.usbcali.ecommerceusb.dto.DocumentTypeResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateDocumentTypeRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DocumentTypeResponse;
 
 import java.util.List;
 

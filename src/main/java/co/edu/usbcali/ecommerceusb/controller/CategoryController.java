@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
-import co.edu.usbcali.ecommerceusb.dto.CategoryResponse;
-import co.edu.usbcali.ecommerceusb.dto.CreateCategoryRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.CategoryResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateCategoryRequest;
 import co.edu.usbcali.ecommerceusb.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

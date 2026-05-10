@@ -1,4 +1,4 @@
-package co.edu.usbcali.ecommerceusb.dto;
+package co.edu.usbcali.ecommerceusb.dto.request;
 
 import lombok.Data;
 import java.math.BigDecimal;

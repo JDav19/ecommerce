@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
-import co.edu.usbcali.ecommerceusb.dto.CreateUserRequest;
-import co.edu.usbcali.ecommerceusb.dto.UserResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateUserRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.UserResponse;
 import co.edu.usbcali.ecommerceusb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

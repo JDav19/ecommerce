@@ -1,6 +1,6 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
-import co.edu.usbcali.ecommerceusb.dto.ProductCategoryResponse;
+import co.edu.usbcali.ecommerceusb.dto.response.ProductCategoryResponse;
 import co.edu.usbcali.ecommerceusb.model.Category;
 import co.edu.usbcali.ecommerceusb.model.Product;
 import co.edu.usbcali.ecommerceusb.model.ProductCategory;

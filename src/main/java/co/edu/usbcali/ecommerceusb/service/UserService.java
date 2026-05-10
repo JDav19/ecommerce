@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service;
 
-import co.edu.usbcali.ecommerceusb.dto.CreateUserRequest;
-import co.edu.usbcali.ecommerceusb.dto.UserResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateUserRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.UserResponse;
 
 import java.util.List;
 

@@ -1,7 +1,8 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
-import co.edu.usbcali.ecommerceusb.dto.CartResponse;
-import co.edu.usbcali.ecommerceusb.dto.CreateCartRequest;
+import co.edu.usbcali.ecommerceusb.dto.UpdateCartRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.CartResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateCartRequest;
 import co.edu.usbcali.ecommerceusb.model.Cart;
 import co.edu.usbcali.ecommerceusb.model.User;
 
@@ -30,5 +31,11 @@ public class CartMapper {
                 .createdAt(OffsetDateTime.now())
                 .updatedAt(OffsetDateTime.now())
                 .build();
+    }
+
+    public static void updateCartFromRequest(Cart cart, UpdateCartRequest request, User user) {
+        cart.setUser(user);
+        cart.setStatus(request.getStatus());
+        cart.setUpdatedAt(OffsetDateTime.now());
     }
 }

@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
-import co.edu.usbcali.ecommerceusb.dto.CreateInventoryMovementRequest;
-import co.edu.usbcali.ecommerceusb.dto.InventoryMovementResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryMovementRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.InventoryMovementResponse;
 import co.edu.usbcali.ecommerceusb.model.InventoryMovement;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.Product;

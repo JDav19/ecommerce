@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
-import co.edu.usbcali.ecommerceusb.dto.CreateOrderItemRequest;
-import co.edu.usbcali.ecommerceusb.dto.OrderItemResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderItemRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.OrderItemResponse;
 import co.edu.usbcali.ecommerceusb.mapper.OrderItemMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.OrderItem;

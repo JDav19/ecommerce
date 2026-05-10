@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
-import co.edu.usbcali.ecommerceusb.dto.CreateProductCategoryRequest;
-import co.edu.usbcali.ecommerceusb.dto.ProductCategoryResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateProductCategoryRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.ProductCategoryResponse;
 import co.edu.usbcali.ecommerceusb.service.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

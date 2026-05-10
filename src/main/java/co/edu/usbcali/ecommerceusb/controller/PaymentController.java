@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
-import co.edu.usbcali.ecommerceusb.dto.CreatePaymentRequest;
-import co.edu.usbcali.ecommerceusb.dto.PaymentResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreatePaymentRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.PaymentResponse;
 import co.edu.usbcali.ecommerceusb.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

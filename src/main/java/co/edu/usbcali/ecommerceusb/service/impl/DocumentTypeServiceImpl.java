@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
-import co.edu.usbcali.ecommerceusb.dto.CreateDocumentTypeRequest;
-import co.edu.usbcali.ecommerceusb.dto.DocumentTypeResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateDocumentTypeRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.mapper.DocumentTypeMapper;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
 import co.edu.usbcali.ecommerceusb.repository.DocumentTypeRepository;

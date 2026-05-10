@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
-import co.edu.usbcali.ecommerceusb.dto.CreatePaymentRequest;
-import co.edu.usbcali.ecommerceusb.dto.PaymentResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreatePaymentRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.PaymentResponse;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.Payment;
 

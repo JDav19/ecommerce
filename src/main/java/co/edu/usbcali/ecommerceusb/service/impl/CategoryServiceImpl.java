@@ -1,7 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
-import co.edu.usbcali.ecommerceusb.dto.CategoryResponse;
-import co.edu.usbcali.ecommerceusb.dto.CreateCategoryRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.CategoryResponse;
+import co.edu.usbcali.ecommerceusb.dto.request.CreateCategoryRequest;
 import co.edu.usbcali.ecommerceusb.mapper.CategoryMapper;
 import co.edu.usbcali.ecommerceusb.model.Category;
 import co.edu.usbcali.ecommerceusb.repository.CategoryRepository;

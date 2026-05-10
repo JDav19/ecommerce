@@ -1,4 +1,4 @@
-package co.edu.usbcali.ecommerceusb.dto;
+package co.edu.usbcali.ecommerceusb.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CreateCategoryRequest {
+public class CreateDocumentTypeRequest {
+    private String code;
     private String name;
-    private Integer parentId;
 }
