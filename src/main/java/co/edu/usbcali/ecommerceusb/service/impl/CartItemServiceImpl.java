@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateCartItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.CartItemResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateCartItemRequest;
 import co.edu.usbcali.ecommerceusb.mapper.CartItemMapper;
@@ -47,7 +48,6 @@ public class CartItemServiceImpl implements CartItemService {
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new Exception("El producto no existe"));
 
-        // 1. Buscamos si el producto ya está en ese carrito
         List<CartItem> existingItems = cartItemRepository.findByCartId(request.getCartId());
         Optional<CartItem> existingItem = existingItems.stream()
                 .filter(item -> item.getProduct().getId().equals(request.getProductId()))
@@ -55,14 +55,26 @@ public class CartItemServiceImpl implements CartItemService {
 
         CartItem cartItem;
         if (existingItem.isPresent()) {
-            // 2. Si ya existe, sumamos la cantidad
             cartItem = existingItem.get();
             cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
             cartItem.setUpdatedAt(OffsetDateTime.now());
         } else {
-            // 3. Si no existe, lo creamos de cero
             cartItem = CartItemMapper.createCartItemRequestToCartItem(request, cart, product);
         }
+
+        return CartItemMapper.modelToCartItemResponse(cartItemRepository.save(cartItem));
+    }
+
+    @Override
+    public CartItemResponse updateQuantity(Integer id, UpdateCartItemRequest request) throws Exception {
+        CartItem cartItem = cartItemRepository.findById(id)
+                .orElseThrow(() -> new Exception("El item del carrito no existe"));
+
+        if (request.getQuantity() == null || request.getQuantity() <= 0) {
+            throw new Exception("La cantidad debe ser mayor a cero");
+        }
+
+        CartItemMapper.updateCartItemFromRequest(cartItem, request);
 
         return CartItemMapper.modelToCartItemResponse(cartItemRepository.save(cartItem));
     }

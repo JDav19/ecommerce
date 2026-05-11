@@ -1,10 +1,12 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateDocumentTypeRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateDocumentTypeRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.mapper.DocumentTypeMapper;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
 import co.edu.usbcali.ecommerceusb.repository.DocumentTypeRepository;
+import co.edu.usbcali.ecommerceusb.service.DocumentTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,5 +60,14 @@ public class DocumentTypeController {
                 DocumentTypeMapper.modelToDocumentTypeResponse(documentType),
                 HttpStatus.CREATED
         );
+    }
+
+    @Autowired
+    private DocumentTypeService documentTypeService;
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DocumentTypeResponse> update(@PathVariable Integer id,
+                                                       @RequestBody UpdateDocumentTypeRequest request) throws Exception {
+        return new ResponseEntity<>(documentTypeService.updateDocumentType(id, request), HttpStatus.OK);
     }
 }

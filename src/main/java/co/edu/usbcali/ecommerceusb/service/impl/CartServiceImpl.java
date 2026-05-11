@@ -37,7 +37,6 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartResponse createCart(CreateCartRequest request) throws Exception {
-        // Validar que el usuario existe
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new Exception("El usuario no existe para asociar al carrito"));
 
@@ -47,18 +46,14 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartResponse updateCart(Integer id, UpdateCartRequest request) throws Exception {
-        // 1. Validar que el carrito existe
         Cart cart = cartRepository.findById(id)
                 .orElseThrow(() -> new Exception("El carrito a actualizar no existe"));
 
-        // 2. Validar que el usuario nuevo existe
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new Exception("El usuario no existe para asociar al carrito"));
 
-        // 3. Actualizar los datos usando el mapper
         CartMapper.updateCartFromRequest(cart, request, user);
 
-        // 4. Guardar y retornar
         return CartMapper.modelToCartResponse(cartRepository.save(cart));
     }
 }

@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateCategoryRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.CategoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateCategoryRequest;
 import co.edu.usbcali.ecommerceusb.model.Category;
@@ -29,4 +30,10 @@ public class CategoryMapper {
                 .createdAt(OffsetDateTime.now())
                 .build();
     }
+
+    public static void updateCategoryFromRequest(Category category, UpdateCategoryRequest request, Category parent) {
+        category.setName(request.getName());
+        category.setParent(parent);
+    }
+
 }

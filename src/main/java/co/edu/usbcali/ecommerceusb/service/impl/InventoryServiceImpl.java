@@ -44,16 +44,13 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryResponse updateStock(CreateInventoryRequest request) throws Exception {
-        // Buscamos si ya existe registro para ese producto
         Inventory inventory = inventoryRepository.findByProductId(request.getProductId())
                 .orElse(null);
 
         if (inventory != null) {
-            // Si ya existe, actualizamos el stock
             inventory.setStock(request.getStock());
             inventory.setUpdatedAt(OffsetDateTime.now());
         } else {
-            // Si no existe, buscamos el producto para crearlo
             Product product = productRepository.findById(request.getProductId())
                     .orElseThrow(() -> new Exception("El producto no existe"));
             inventory = InventoryMapper.createRequestToModel(request, product);

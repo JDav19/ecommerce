@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateDocumentTypeRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateDocumentTypeRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
 
@@ -37,6 +38,11 @@ public class DocumentTypeMapper {
                 .name(request.getName())
                 .createdAt(java.time.OffsetDateTime.now())
                 .build();
+    }
+
+    public static void updateModelFromRequest(DocumentType documentType, UpdateDocumentTypeRequest request) {
+        documentType.setCode(request.getCode());
+        documentType.setName(request.getName());
     }
 
 }

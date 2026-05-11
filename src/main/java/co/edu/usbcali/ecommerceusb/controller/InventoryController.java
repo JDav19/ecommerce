@@ -20,13 +20,11 @@ public class InventoryController {
         return inventoryService.getAllInventory();
     }
 
-    // El que nos faltaba para buscar por el ID del inventario
     @GetMapping("/{id}")
     public InventoryResponse getById(@PathVariable("id") Integer id) throws Exception {
         return inventoryService.getById(id);
     }
 
-    // También es muy útil buscar directamente por el ID del producto
     @GetMapping("/product/{productId}")
     public InventoryResponse getByProductId(@PathVariable("productId") Integer productId) throws Exception {
         return inventoryService.getByProductId(productId);

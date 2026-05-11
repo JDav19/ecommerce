@@ -17,7 +17,6 @@ public class OrderItemMapper {
                 .product(product)
                 .quantity(request.getQuantity())
                 .unitPriceSnapshot(request.getUnitPriceSnapshot())
-                // Calculamos el total de la línea: precio * cantidad
                 .lineTotal(request.getUnitPriceSnapshot().multiply(new BigDecimal(request.getQuantity())))
                 .createdAt(OffsetDateTime.now())
                 .build();

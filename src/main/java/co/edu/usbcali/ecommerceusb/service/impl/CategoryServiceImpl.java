@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateCategoryRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.CategoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateCategoryRequest;
 import co.edu.usbcali.ecommerceusb.mapper.CategoryMapper;
@@ -39,6 +40,25 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         Category category = CategoryMapper.createCategoryRequestToCategory(request, parent);
+        return CategoryMapper.modelToCategoryResponse(categoryRepository.save(category));
+    }
+
+    @Override
+    public CategoryResponse updateCategory(Integer id, UpdateCategoryRequest request) throws Exception {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new Exception("La categoría a actualizar no existe"));
+
+        Category parent = null;
+        if (request.getParentId() != null) {
+            if (id.equals(request.getParentId())) {
+                throw new Exception("Una categoría no puede ser padre de sí misma");
+            }
+            parent = categoryRepository.findById(request.getParentId())
+                    .orElseThrow(() -> new Exception("La categoría padre especificada no existe"));
+        }
+
+        CategoryMapper.updateCategoryFromRequest(category, request, parent);
+
         return CategoryMapper.modelToCategoryResponse(categoryRepository.save(category));
     }
 }

@@ -43,7 +43,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse createOrder(CreateOrderRequest request) throws Exception {
         if (Objects.isNull(request)) throw new Exception("El request no puede ser nulo");
 
-        // Validar integridad del usuario
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new Exception("El usuario no existe"));
 

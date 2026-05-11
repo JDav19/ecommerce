@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateCartItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.CartItemResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateCartItemRequest;
 import co.edu.usbcali.ecommerceusb.service.CartItemService;
@@ -30,5 +31,11 @@ public class CartItemController {
     @PostMapping
     public ResponseEntity<CartItemResponse> addProduct(@RequestBody CreateCartItemRequest request) throws Exception {
         return new ResponseEntity<>(cartItemService.addProductToCart(request), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CartItemResponse> updateQuantity(@PathVariable Integer id,
+                                                           @RequestBody UpdateCartItemRequest request) throws Exception {
+        return new ResponseEntity<>(cartItemService.updateQuantity(id, request), HttpStatus.OK);
     }
 }

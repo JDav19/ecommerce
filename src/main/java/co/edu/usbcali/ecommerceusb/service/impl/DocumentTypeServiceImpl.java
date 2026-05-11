@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateDocumentTypeRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateDocumentTypeRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.mapper.DocumentTypeMapper;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
@@ -54,6 +55,15 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
     public DocumentTypeResponse createDocumentType(CreateDocumentTypeRequest request) throws Exception {
         // Podrías validar si el código ya existe para evitar el error de base de datos
         DocumentType documentType = DocumentTypeMapper.createRequestToModel(request);
+        return DocumentTypeMapper.modelToDocumentTypeResponse(documentTypeRepository.save(documentType));
+    }
+
+    @Override
+    public DocumentTypeResponse updateDocumentType(Integer id, UpdateDocumentTypeRequest request) throws Exception {
+        // Buscar el tipo de documento
+        DocumentType documentType = documentTypeRepository.findById(id)
+                .orElseThrow(() -> new Exception("Tipo de documento no encontrado para actualizar"));
+        DocumentTypeMapper.updateModelFromRequest(documentType, request);
         return DocumentTypeMapper.modelToDocumentTypeResponse(documentTypeRepository.save(documentType));
     }
 }

@@ -49,39 +49,32 @@ public class InventoryMovementServiceImpl implements InventoryMovementService {
 
     @Override
     public InventoryMovementResponse createMovement(CreateInventoryMovementRequest request) throws Exception {
-        // Validaciones de objeto nulo
         if (Objects.isNull(request)) {
             throw new Exception("El objeto CreateInventoryMovementRequest no puede ser nulo");
         }
 
-        // Validar ProductId
         if (request.getProductId() == null || request.getProductId() <= 0) {
             throw new Exception("El campo productId debe ser válido");
         }
 
-        // Validar OrderId
         if (request.getOrderId() == null || request.getOrderId() <= 0) {
             throw new Exception("El campo orderId debe ser válido");
         }
 
-        // Validar Type (IN/OUT)
         if (request.getType() == null || request.getType().isBlank()) {
             throw new Exception("El campo type no puede ser nulo o vacío");
         }
 
-        // Validar Qty
         if (request.getQty() == null || request.getQty() <= 0) {
             throw new Exception("La cantidad (qty) debe ser mayor a 0");
         }
 
-        // Validar existencia de dependencias
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new Exception("El producto especificado no existe"));
 
         Order order = orderRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new Exception("La orden especificada no existe"));
 
-        // Mapear y persistir
         InventoryMovement movement = InventoryMovementMapper.requestToModel(request, product, order);
         movement = inventoryMovementRepository.save(movement);
 
