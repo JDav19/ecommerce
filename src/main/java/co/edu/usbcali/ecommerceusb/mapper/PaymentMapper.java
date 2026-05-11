@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreatePaymentRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdatePaymentRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.PaymentResponse;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.Payment;
@@ -28,5 +29,10 @@ public class PaymentMapper {
                 .idempotencyKey(model.getIdempotencyKey())
                 .createdAt(model.getCreatedAt())
                 .build();
+    }
+
+    public static void updateModelFromRequest(Payment payment, UpdatePaymentRequest request) {
+        payment.setStatus(request.getStatus());
+        payment.setProviderRef(request.getProviderRef());
     }
 }

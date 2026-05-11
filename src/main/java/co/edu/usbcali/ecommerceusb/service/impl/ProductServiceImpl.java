@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateProductRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.ProductResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateProductRequest;
 import co.edu.usbcali.ecommerceusb.mapper.ProductMapper;
@@ -32,6 +33,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse createProduct(CreateProductRequest request) {
         Product product = ProductMapper.createProductRequestToProduct(request);
+        return ProductMapper.modelToProductResponse(productRepository.save(product));
+    }
+
+    @Override
+    public ProductResponse updateProduct(Integer id, UpdateProductRequest request) throws Exception {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new Exception("El producto a actualizar no existe"));
+        if (request.getPrice() != null && request.getPrice().compareTo(java.math.BigDecimal.ZERO) < 0) {
+            throw new Exception("El precio no puede ser negativo");
+        }
+        ProductMapper.updateProductFromRequest(product, request);
         return ProductMapper.modelToProductResponse(productRepository.save(product));
     }
 }

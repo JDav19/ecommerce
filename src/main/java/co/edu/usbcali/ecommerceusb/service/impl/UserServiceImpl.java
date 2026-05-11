@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateUserRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateUserRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.UserResponse;
 import co.edu.usbcali.ecommerceusb.mapper.UserMapper;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
@@ -152,5 +153,16 @@ public class UserServiceImpl implements UserService {
         user = userRepository.save(user); // Persistir el usuario en la base de datos
         UserResponse userResponse = UserMapper.modelToUserResponse(user); // Mapear a Response
         return userResponse; // Retornar el Response
+    }
+
+    @Override
+    public UserResponse updateUser(Integer id, UpdateUserRequest request) throws Exception {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new Exception("El usuario a actualizar no existe"));
+        if (request.getFullName() == null || request.getFullName().isBlank()) {
+            throw new Exception("El nombre completo es obligatorio");
+        }
+        UserMapper.updateUserFromRequest(user, request);
+        return UserMapper.modelToUserResponse(userRepository.save(user));
     }
 }

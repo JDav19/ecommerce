@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateUserRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateUserRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.UserResponse;
 import co.edu.usbcali.ecommerceusb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,11 @@ public class UserController {
             @RequestBody CreateUserRequest createUserRequest) throws Exception {
         return new ResponseEntity<>(userService.createUser(createUserRequest),
                 HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> update(@PathVariable Integer id,
+                                               @RequestBody UpdateUserRequest request) throws Exception {
+        return new ResponseEntity<>(userService.updateUser(id, request), HttpStatus.OK);
     }
 }

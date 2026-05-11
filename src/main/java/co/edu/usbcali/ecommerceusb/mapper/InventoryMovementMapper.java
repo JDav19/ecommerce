@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryMovementRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateInventoryMovementRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.InventoryMovementResponse;
 import co.edu.usbcali.ecommerceusb.model.InventoryMovement;
 import co.edu.usbcali.ecommerceusb.model.Order;
@@ -36,5 +37,10 @@ public class InventoryMovementMapper {
                 .qty(request.getQty())
                 .createdAt(OffsetDateTime.now())
                 .build();
+    }
+
+    public static void updateModelFromRequest(InventoryMovement movement, UpdateInventoryMovementRequest request) {
+        movement.setType(request.getType());
+        movement.setQty(request.getQty());
     }
 }

@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.InventoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.mapper.InventoryMapper;
@@ -56,6 +57,17 @@ public class InventoryServiceImpl implements InventoryService {
             inventory = InventoryMapper.createRequestToModel(request, product);
         }
 
+        return InventoryMapper.modelToInventoryResponse(inventoryRepository.save(inventory));
+    }
+
+    @Override
+    public InventoryResponse updateInventory(Integer id, UpdateInventoryRequest request) throws Exception {
+        Inventory inventory = inventoryRepository.findById(id)
+                .orElseThrow(() -> new Exception("El registro de inventario no existe"));
+        if (request.getStock() < 0) {
+            throw new Exception("El stock no puede ser menor a cero");
+        }
+        InventoryMapper.updateInventoryFromRequest(inventory, request);
         return InventoryMapper.modelToInventoryResponse(inventoryRepository.save(inventory));
     }
 }

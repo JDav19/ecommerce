@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.InventoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.service.InventoryService;
@@ -33,5 +34,11 @@ public class InventoryController {
     @PostMapping
     public InventoryResponse updateStock(@RequestBody CreateInventoryRequest request) throws Exception {
         return inventoryService.updateStock(request);
+    }
+
+    @PutMapping("/{id}")
+    public InventoryResponse update(@PathVariable Integer id,
+                                    @RequestBody UpdateInventoryRequest request) throws Exception {
+        return inventoryService.updateInventory(id, request);
     }
 }

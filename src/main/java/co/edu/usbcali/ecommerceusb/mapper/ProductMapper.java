@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateProductRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.ProductResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateProductRequest;
 import co.edu.usbcali.ecommerceusb.model.Product;
@@ -32,5 +33,13 @@ public class ProductMapper {
                 .createdAt(OffsetDateTime.now())
                 .updatedAt(OffsetDateTime.now())
                 .build();
+    }
+
+    public static void updateProductFromRequest(Product product, UpdateProductRequest request) {
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setAvailable(request.getAvailable());
+        product.setUpdatedAt(OffsetDateTime.now());
     }
 }

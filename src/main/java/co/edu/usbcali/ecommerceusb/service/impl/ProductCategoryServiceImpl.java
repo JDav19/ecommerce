@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateProductCategoryRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateProductCategoryRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.ProductCategoryResponse;
 import co.edu.usbcali.ecommerceusb.mapper.ProductCategoryMapper;
 import co.edu.usbcali.ecommerceusb.model.Category;
@@ -48,5 +49,19 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         ProductCategory productCategory = ProductCategoryMapper.requestToModel(product, category);
         return ProductCategoryMapper.modelToResponse(productCategoryRepository.save(productCategory));
+    }
+
+    @Override
+    public ProductCategoryResponse update(Integer id, UpdateProductCategoryRequest request) {
+        ProductCategory pc = productCategoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Relación Producto-Categoría no encontrada"));
+
+        Product product = productRepository.findById(request.getProductId())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+        ProductCategoryMapper.updateModelFromRequest(pc, product, category);
+        return ProductCategoryMapper.modelToResponse(productCategoryRepository.save(pc));
     }
 }

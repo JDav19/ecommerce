@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderResponse;
 import co.edu.usbcali.ecommerceusb.mapper.OrderMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
@@ -47,6 +48,17 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new Exception("El usuario no existe"));
 
         Order order = OrderMapper.requestToModel(request, user);
+        return OrderMapper.modelToResponse(orderRepository.save(order));
+    }
+
+    @Override
+    public OrderResponse updateOrder(Integer id, UpdateOrderRequest request) throws Exception {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new Exception(String.format("La orden con ID %d no existe", id)));
+        if (request.getTotalAmount() == null || request.getTotalAmount().compareTo(java.math.BigDecimal.ZERO) < 0) {
+            throw new Exception("El monto total no puede ser negativo o nulo");
+        }
+        OrderMapper.updateOrderFromRequest(order, request);
         return OrderMapper.modelToResponse(orderRepository.save(order));
     }
 }

@@ -23,4 +23,9 @@ public class ProductCategoryMapper {
                 .categoryName(model.getCategory().getName())
                 .build();
     }
+
+    public static void updateModelFromRequest(ProductCategory model, Product product, Category category) {
+        model.setProduct(product);
+        model.setCategory(category);
+    }
 }

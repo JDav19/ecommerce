@@ -1,5 +1,6 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.InventoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.model.Inventory;
@@ -29,5 +30,10 @@ public class InventoryMapper {
                 .stock(request.getStock())
                 .updatedAt(OffsetDateTime.now())
                 .build();
+    }
+
+    public static void updateInventoryFromRequest(Inventory inventory, UpdateInventoryRequest request) {
+        inventory.setStock(request.getStock());
+        inventory.setUpdatedAt(OffsetDateTime.now());
     }
 }

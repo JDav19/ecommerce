@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateProductCategoryRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateProductCategoryRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.ProductCategoryResponse;
 import co.edu.usbcali.ecommerceusb.service.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,11 @@ public class ProductCategoryController {
     @PostMapping
     public ResponseEntity<ProductCategoryResponse> create(@RequestBody CreateProductCategoryRequest request) {
         return new ResponseEntity<>(productCategoryService.create(request), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductCategoryResponse> update(@PathVariable Integer id,
+                                                          @RequestBody UpdateProductCategoryRequest request) {
+        return ResponseEntity.ok(productCategoryService.update(id, request));
     }
 }

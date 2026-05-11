@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderItemRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderItemResponse;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.OrderItem;
@@ -33,5 +34,10 @@ public class OrderItemMapper {
                 .lineTotal(model.getLineTotal())
                 .createdAt(model.getCreatedAt())
                 .build();
+    }
+
+    public static void updateModelFromRequest(OrderItem model, UpdateOrderItemRequest request) {
+        model.setQuantity(request.getQuantity());
+        model.setLineTotal(model.getUnitPriceSnapshot().multiply(new java.math.BigDecimal(request.getQuantity())));
     }
 }

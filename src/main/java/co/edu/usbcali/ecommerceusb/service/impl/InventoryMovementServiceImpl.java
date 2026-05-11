@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryMovementRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateInventoryMovementRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.InventoryMovementResponse;
 import co.edu.usbcali.ecommerceusb.mapper.InventoryMovementMapper;
 import co.edu.usbcali.ecommerceusb.model.InventoryMovement;
@@ -79,5 +80,19 @@ public class InventoryMovementServiceImpl implements InventoryMovementService {
         movement = inventoryMovementRepository.save(movement);
 
         return InventoryMovementMapper.modelToResponse(movement);
+    }
+
+    @Override
+    public InventoryMovementResponse updateMovement(Integer id, UpdateInventoryMovementRequest request) throws Exception {
+        InventoryMovement movement = inventoryMovementRepository.findById(id)
+                .orElseThrow(() -> new Exception("Movimiento de inventario no encontrado"));
+        if (request.getQty() == null || request.getQty() <= 0) {
+            throw new Exception("La cantidad debe ser mayor a cero");
+        }
+        if (request.getType() == null || request.getType().isBlank()) {
+            throw new Exception("El tipo de movimiento no puede estar vacío");
+        }
+        InventoryMovementMapper.updateModelFromRequest(movement, request);
+        return InventoryMovementMapper.modelToResponse(inventoryMovementRepository.save(movement));
     }
 }

@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.mapper;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderResponse;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.User;
@@ -34,5 +35,11 @@ public class OrderMapper {
                 .currency(request.getCurrency())
                 .createdAt(OffsetDateTime.now())
                 .build();
+    }
+
+    public static void updateOrderFromRequest(Order order, UpdateOrderRequest request) {
+        order.setStatus(request.getStatus());
+        order.setTotalAmount(request.getTotalAmount());
+        order.setCurrency(request.getCurrency());
     }
 }

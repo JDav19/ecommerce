@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.controller;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderItemRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderItemResponse;
 import co.edu.usbcali.ecommerceusb.service.OrderItemService;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,11 @@ public class OrderItemController {
     @PostMapping
     public ResponseEntity<OrderItemResponse> create(@RequestBody CreateOrderItemRequest request) {
         return new ResponseEntity<>(orderItemService.create(request), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderItemResponse> update(@PathVariable Integer id,
+                                                    @RequestBody UpdateOrderItemRequest request) {
+        return ResponseEntity.ok(orderItemService.update(id, request));
     }
 }

@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreatePaymentRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdatePaymentRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.PaymentResponse;
 import co.edu.usbcali.ecommerceusb.mapper.PaymentMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
@@ -41,6 +42,17 @@ public class PaymentServiceImpl implements PaymentService {
                 .orElseThrow(() -> new RuntimeException("Orden no encontrada para el pago"));
 
         Payment payment = PaymentMapper.requestToModel(request, order);
+        return PaymentMapper.modelToResponse(paymentRepository.save(payment));
+    }
+
+    @Override
+    public PaymentResponse update(Integer id, UpdatePaymentRequest request) {
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pago no encontrado con ID: " + id));
+        if (request.getStatus() == null || request.getStatus().isBlank()) {
+            throw new RuntimeException("El estado del pago no puede estar vacío");
+        }
+        PaymentMapper.updateModelFromRequest(payment, request);
         return PaymentMapper.modelToResponse(paymentRepository.save(payment));
     }
 }

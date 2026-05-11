@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderItemRequest;
+import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderItemResponse;
 import co.edu.usbcali.ecommerceusb.mapper.OrderItemMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
@@ -48,5 +49,16 @@ public class OrderItemServiceImpl implements OrderItemService {
 
         OrderItem newItem = OrderItemMapper.requestToModel(request, order, product);
         return OrderItemMapper.modelToResponse(orderItemRepository.save(newItem));
+    }
+
+    @Override
+    public OrderItemResponse update(Integer id, UpdateOrderItemRequest request) {
+        OrderItem item = orderItemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("OrderItem no encontrado con ID: " + id));
+        if (request.getQuantity() == null || request.getQuantity() <= 0) {
+            throw new RuntimeException("La cantidad debe ser mayor a cero");
+        }
+        OrderItemMapper.updateModelFromRequest(item, request);
+        return OrderItemMapper.modelToResponse(orderItemRepository.save(item));
     }
 }
