@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateInventoryRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteInventoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.InventoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.mapper.InventoryMapper;
@@ -69,5 +70,19 @@ public class InventoryServiceImpl implements InventoryService {
         }
         InventoryMapper.updateInventoryFromRequest(inventory, request);
         return InventoryMapper.modelToInventoryResponse(inventoryRepository.save(inventory));
+    }
+
+    @Override
+    public DeleteInventoryResponse deleteInventory(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        Inventory inventory = inventoryRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró el inventario con id %d", id)));
+        inventoryRepository.delete(inventory);
+        return DeleteInventoryResponse.builder()
+                .message(String.format("Inventario con id %d removido exitosamente", id))
+                .build();
     }
 }

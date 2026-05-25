@@ -2,6 +2,7 @@ package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateDocumentTypeRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateDocumentTypeRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteDocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.DocumentTypeResponse;
 import co.edu.usbcali.ecommerceusb.mapper.DocumentTypeMapper;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
@@ -65,5 +66,19 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
                 .orElseThrow(() -> new Exception("Tipo de documento no encontrado para actualizar"));
         DocumentTypeMapper.updateModelFromRequest(documentType, request);
         return DocumentTypeMapper.modelToDocumentTypeResponse(documentTypeRepository.save(documentType));
+    }
+
+    @Override
+    public DeleteDocumentTypeResponse deleteDocumentType(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        DocumentType documentType = documentTypeRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró el tipo de documento con id %d", id)));
+        documentTypeRepository.delete(documentType);
+        return DeleteDocumentTypeResponse.builder()
+                .message(String.format("Tipo de documento con id %d borrado correctamente", id))
+                .build();
     }
 }

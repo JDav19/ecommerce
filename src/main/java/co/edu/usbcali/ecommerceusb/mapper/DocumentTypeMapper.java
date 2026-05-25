@@ -44,5 +44,4 @@ public class DocumentTypeMapper {
         documentType.setCode(request.getCode());
         documentType.setName(request.getName());
     }
-
 }

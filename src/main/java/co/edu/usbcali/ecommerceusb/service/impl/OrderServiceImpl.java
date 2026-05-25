@@ -2,6 +2,7 @@ package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteOrderResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderResponse;
 import co.edu.usbcali.ecommerceusb.mapper.OrderMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
@@ -60,5 +61,19 @@ public class OrderServiceImpl implements OrderService {
         }
         OrderMapper.updateOrderFromRequest(order, request);
         return OrderMapper.modelToResponse(orderRepository.save(order));
+    }
+
+    @Override
+    public DeleteOrderResponse deleteOrder(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró la orden con id %d", id)));
+        orderRepository.delete(order);
+        return DeleteOrderResponse.builder()
+                .message(String.format("Orden con id %d eliminada con éxito", id))
+                .build();
     }
 }

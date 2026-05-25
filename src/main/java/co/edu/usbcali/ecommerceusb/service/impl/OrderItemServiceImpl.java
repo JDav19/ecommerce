@@ -2,6 +2,7 @@ package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderItemRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteOrderItemResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderItemResponse;
 import co.edu.usbcali.ecommerceusb.mapper.OrderItemMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
@@ -60,5 +61,19 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
         OrderItemMapper.updateModelFromRequest(item, request);
         return OrderItemMapper.modelToResponse(orderItemRepository.save(item));
+    }
+
+    @Override
+    public DeleteOrderItemResponse deleteOrderItem(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        OrderItem orderItem = orderItemRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró el OrderItem con id %d", id)));
+        orderItemRepository.delete(orderItem);
+        return DeleteOrderItemResponse.builder()
+                .message(String.format("OrderItem con id %d borrado correctamente", id))
+                .build();
     }
 }

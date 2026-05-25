@@ -3,6 +3,7 @@ package co.edu.usbcali.ecommerceusb.service.impl;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateCartRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.CartResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateCartRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteCartResponse;
 import co.edu.usbcali.ecommerceusb.mapper.CartMapper;
 import co.edu.usbcali.ecommerceusb.model.Cart;
 import co.edu.usbcali.ecommerceusb.model.User;
@@ -55,5 +56,19 @@ public class CartServiceImpl implements CartService {
         CartMapper.updateCartFromRequest(cart, request, user);
 
         return CartMapper.modelToCartResponse(cartRepository.save(cart));
+    }
+
+    @Override
+    public DeleteCartResponse deleteCart(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        Cart cart = cartRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró el carrito con id %d", id)));
+        cartRepository.delete(cart);
+        return DeleteCartResponse.builder()
+                .message(String.format("Carrito con id %d eliminado con éxito", id))
+                .build();
     }
 }

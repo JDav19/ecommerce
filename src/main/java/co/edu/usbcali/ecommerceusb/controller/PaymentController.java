@@ -3,6 +3,7 @@ package co.edu.usbcali.ecommerceusb.controller;
 import co.edu.usbcali.ecommerceusb.dto.request.CreatePaymentRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdatePaymentRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.PaymentResponse;
+import co.edu.usbcali.ecommerceusb.dto.response.DeletePaymentResponse;
 import co.edu.usbcali.ecommerceusb.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,11 @@ public class PaymentController {
     public ResponseEntity<PaymentResponse> update(@PathVariable Integer id,
                                                   @RequestBody UpdatePaymentRequest request) {
         return ResponseEntity.ok(paymentService.update(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DeletePaymentResponse> deletePayment(
+            @PathVariable Integer id) throws Exception {
+        return new ResponseEntity<>(paymentService.deletePayment(id), HttpStatus.OK);
     }
 }

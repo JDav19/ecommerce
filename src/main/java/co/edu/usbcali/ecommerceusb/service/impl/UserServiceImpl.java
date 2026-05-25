@@ -2,6 +2,7 @@ package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateUserRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateUserRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteUserResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.UserResponse;
 import co.edu.usbcali.ecommerceusb.mapper.UserMapper;
 import co.edu.usbcali.ecommerceusb.model.DocumentType;
@@ -164,5 +165,19 @@ public class UserServiceImpl implements UserService {
         }
         UserMapper.updateUserFromRequest(user, request);
         return UserMapper.modelToUserResponse(userRepository.save(user));
+    }
+
+    @Override
+    public DeleteUserResponse deleteUser(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró el usuario con id %d", id)));
+        userRepository.delete(user);
+        return DeleteUserResponse.builder()
+                .message(String.format("Usuario con id %d borrado con éxito", id))
+                .build();
     }
 }

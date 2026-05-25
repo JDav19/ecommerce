@@ -2,6 +2,7 @@ package co.edu.usbcali.ecommerceusb.service;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderItemRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteOrderItemResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderItemResponse;
 import java.util.List;
 
@@ -10,4 +11,5 @@ public interface OrderItemService {
     OrderItemResponse findById(Integer id);
     OrderItemResponse create(CreateOrderItemRequest request);
     OrderItemResponse update(Integer id, UpdateOrderItemRequest request);
+    DeleteOrderItemResponse deleteOrderItem(Integer id) throws Exception;
 }

@@ -2,6 +2,7 @@ package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreatePaymentRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdatePaymentRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeletePaymentResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.PaymentResponse;
 import co.edu.usbcali.ecommerceusb.mapper.PaymentMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
@@ -54,5 +55,19 @@ public class PaymentServiceImpl implements PaymentService {
         }
         PaymentMapper.updateModelFromRequest(payment, request);
         return PaymentMapper.modelToResponse(paymentRepository.save(payment));
+    }
+
+    @Override
+    public DeletePaymentResponse deletePayment(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró el pago con id %d", id)));
+        paymentRepository.delete(payment);
+        return DeletePaymentResponse.builder()
+                .message(String.format("Pago con id %d borrado con éxito", id))
+                .build();
     }
 }

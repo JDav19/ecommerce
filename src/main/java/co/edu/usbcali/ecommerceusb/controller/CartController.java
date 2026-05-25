@@ -3,6 +3,7 @@ package co.edu.usbcali.ecommerceusb.controller;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateCartRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.CartResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateCartRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteCartResponse;
 import co.edu.usbcali.ecommerceusb.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,11 @@ public class CartController {
     public ResponseEntity<CartResponse> update(@PathVariable Integer id,
                                                @RequestBody UpdateCartRequest request) throws Exception {
         return new ResponseEntity<>(cartService.updateCart(id, request), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DeleteCartResponse> deleteCart(
+            @PathVariable Integer id) throws Exception {
+        return new ResponseEntity<>(cartService.deleteCart(id), HttpStatus.OK);
     }
 }

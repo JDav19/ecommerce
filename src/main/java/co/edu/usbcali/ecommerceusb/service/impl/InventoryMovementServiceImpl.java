@@ -2,6 +2,7 @@ package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryMovementRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateInventoryMovementRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteInventoryMovementResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.InventoryMovementResponse;
 import co.edu.usbcali.ecommerceusb.mapper.InventoryMovementMapper;
 import co.edu.usbcali.ecommerceusb.model.InventoryMovement;
@@ -94,5 +95,19 @@ public class InventoryMovementServiceImpl implements InventoryMovementService {
         }
         InventoryMovementMapper.updateModelFromRequest(movement, request);
         return InventoryMovementMapper.modelToResponse(inventoryMovementRepository.save(movement));
+    }
+
+    @Override
+    public DeleteInventoryMovementResponse deleteInventoryMovement(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        InventoryMovement inventoryMovement = inventoryMovementRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró el movimiento de inventario con id %d", id)));
+        inventoryMovementRepository.delete(inventoryMovement);
+        return DeleteInventoryMovementResponse.builder()
+                .message(String.format("Movimiento de inventario con id %d borrado con éxito", id))
+                .build();
     }
 }

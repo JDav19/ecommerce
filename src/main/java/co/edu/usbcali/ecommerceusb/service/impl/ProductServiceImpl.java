@@ -1,6 +1,7 @@
 package co.edu.usbcali.ecommerceusb.service.impl;
 
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateProductRequest;
+import co.edu.usbcali.ecommerceusb.dto.response.DeleteProductResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.ProductResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateProductRequest;
 import co.edu.usbcali.ecommerceusb.mapper.ProductMapper;
@@ -45,5 +46,19 @@ public class ProductServiceImpl implements ProductService {
         }
         ProductMapper.updateProductFromRequest(product, request);
         return ProductMapper.modelToProductResponse(productRepository.save(product));
+    }
+
+    @Override
+    public DeleteProductResponse deleteProduct(Integer id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("Ingrese ID para eliminar");
+        }
+        Product product = productRepository.findById(id)
+                .orElseThrow(() ->
+                        new Exception(String.format("No se encontró el producto con id %d", id)));
+        productRepository.delete(product);
+        return DeleteProductResponse.builder()
+                .message(String.format("Producto con id %d removido exitosamente", id))
+                .build();
     }
 }

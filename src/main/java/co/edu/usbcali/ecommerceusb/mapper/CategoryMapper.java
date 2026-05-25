@@ -35,5 +35,4 @@ public class CategoryMapper {
         category.setName(request.getName());
         category.setParent(parent);
     }
-
 }
