@@ -25,27 +25,24 @@ public class InventoryMovementController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InventoryMovementResponse> getById(@PathVariable Integer id) throws Exception {
-        return new ResponseEntity<>(inventoryMovementService.getMovementById(id),
-                HttpStatus.OK);
+    public ResponseEntity<InventoryMovementResponse> getById(@PathVariable Integer id) {
+        return new ResponseEntity<>(inventoryMovementService.getMovementById(id), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<InventoryMovementResponse> createMovement(
-            @RequestBody CreateInventoryMovementRequest request) throws Exception {
-        return new ResponseEntity<>(inventoryMovementService.createMovement(request),
-                HttpStatus.CREATED);
+            @RequestBody CreateInventoryMovementRequest request) {
+        return new ResponseEntity<>(inventoryMovementService.createMovement(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<InventoryMovementResponse> update(@PathVariable Integer id,
-                                                            @RequestBody UpdateInventoryMovementRequest request) throws Exception {
+                                                            @RequestBody UpdateInventoryMovementRequest request) {
         return new ResponseEntity<>(inventoryMovementService.updateMovement(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteInventoryMovementResponse> deleteInventoryMovement(
-            @PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeleteInventoryMovementResponse> deleteInventoryMovement(@PathVariable Integer id) {
         return new ResponseEntity<>(inventoryMovementService.deleteInventoryMovement(id), HttpStatus.OK);
     }
 }

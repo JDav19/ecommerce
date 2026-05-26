@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getById(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<ProductResponse> getById(@PathVariable Integer id) {
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
@@ -36,13 +36,12 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> update(@PathVariable Integer id,
-                                                  @RequestBody UpdateProductRequest request) throws Exception {
+                                                  @RequestBody UpdateProductRequest request) {
         return new ResponseEntity<>(productService.updateProduct(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteProductResponse> deleteProduct(
-            @PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeleteProductResponse> deleteProduct(@PathVariable Integer id) {
         return new ResponseEntity<>(productService.deleteProduct(id), HttpStatus.OK);
     }
 }

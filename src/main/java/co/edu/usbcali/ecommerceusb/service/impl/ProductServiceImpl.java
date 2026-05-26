@@ -4,6 +4,8 @@ import co.edu.usbcali.ecommerceusb.dto.request.UpdateProductRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DeleteProductResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.ProductResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateProductRequest;
+import co.edu.usbcali.ecommerceusb.exception.BadRequestException;
+import co.edu.usbcali.ecommerceusb.exception.ResourceNotFoundException;
 import co.edu.usbcali.ecommerceusb.mapper.ProductMapper;
 import co.edu.usbcali.ecommerceusb.model.Product;
 import co.edu.usbcali.ecommerceusb.repository.ProductRepository;
@@ -25,9 +27,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse getProductById(Integer id) throws Exception {
+    public ProductResponse getProductById(Integer id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new Exception("Producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado"));
         return ProductMapper.modelToProductResponse(product);
     }
 
@@ -38,24 +40,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse updateProduct(Integer id, UpdateProductRequest request) throws Exception {
+    public ProductResponse updateProduct(Integer id, UpdateProductRequest request) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new Exception("El producto a actualizar no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El producto a actualizar no existe"));
         if (request.getPrice() != null && request.getPrice().compareTo(java.math.BigDecimal.ZERO) < 0) {
-            throw new Exception("El precio no puede ser negativo");
+            throw new BadRequestException("El precio no puede ser negativo");
         }
         ProductMapper.updateProductFromRequest(product, request);
         return ProductMapper.modelToProductResponse(productRepository.save(product));
     }
 
     @Override
-    public DeleteProductResponse deleteProduct(Integer id) throws Exception {
+    public DeleteProductResponse deleteProduct(Integer id) {
         if (id == null || id <= 0) {
-            throw new Exception("Ingrese ID para eliminar");
+            throw new BadRequestException("Ingrese ID para eliminar");
         }
         Product product = productRepository.findById(id)
                 .orElseThrow(() ->
-                        new Exception(String.format("No se encontró el producto con id %d", id)));
+                        new ResourceNotFoundException(String.format("No se encontró el producto con id %d", id)));
         productRepository.delete(product);
         return DeleteProductResponse.builder()
                 .message(String.format("Producto con id %d removido exitosamente", id))

@@ -4,6 +4,8 @@ import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DeleteOrderItemResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderItemResponse;
+import co.edu.usbcali.ecommerceusb.exception.BadRequestException;
+import co.edu.usbcali.ecommerceusb.exception.ResourceNotFoundException;
 import co.edu.usbcali.ecommerceusb.mapper.OrderItemMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.OrderItem;
@@ -36,17 +38,17 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItemResponse findById(Integer id) {
         OrderItem item = orderItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("OrderItem no encontrado con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("OrderItem no encontrado con ID: " + id));
         return OrderItemMapper.modelToResponse(item);
     }
 
     @Override
     public OrderItemResponse create(CreateOrderItemRequest request) {
         Order order = orderRepository.findById(request.getOrderId())
-                .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada"));
 
         Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado"));
 
         OrderItem newItem = OrderItemMapper.requestToModel(request, order, product);
         return OrderItemMapper.modelToResponse(orderItemRepository.save(newItem));
@@ -55,22 +57,22 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItemResponse update(Integer id, UpdateOrderItemRequest request) {
         OrderItem item = orderItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("OrderItem no encontrado con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("OrderItem no encontrado con ID: " + id));
         if (request.getQuantity() == null || request.getQuantity() <= 0) {
-            throw new RuntimeException("La cantidad debe ser mayor a cero");
+            throw new BadRequestException("La cantidad debe ser mayor a cero");
         }
         OrderItemMapper.updateModelFromRequest(item, request);
         return OrderItemMapper.modelToResponse(orderItemRepository.save(item));
     }
 
     @Override
-    public DeleteOrderItemResponse deleteOrderItem(Integer id) throws Exception {
+    public DeleteOrderItemResponse deleteOrderItem(Integer id) {
         if (id == null || id <= 0) {
-            throw new Exception("Ingrese ID para eliminar");
+            throw new BadRequestException("Ingrese ID para eliminar");
         }
         OrderItem orderItem = orderItemRepository.findById(id)
                 .orElseThrow(() ->
-                        new Exception(String.format("No se encontró el OrderItem con id %d", id)));
+                        new ResourceNotFoundException(String.format("No se encontró el OrderItem con id %d", id)));
         orderItemRepository.delete(orderItem);
         return DeleteOrderItemResponse.builder()
                 .message(String.format("OrderItem con id %d borrado correctamente", id))

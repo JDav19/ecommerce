@@ -4,6 +4,8 @@ import co.edu.usbcali.ecommerceusb.dto.request.UpdateCartRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.CartResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateCartRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DeleteCartResponse;
+import co.edu.usbcali.ecommerceusb.exception.BadRequestException;
+import co.edu.usbcali.ecommerceusb.exception.ResourceNotFoundException;
 import co.edu.usbcali.ecommerceusb.mapper.CartMapper;
 import co.edu.usbcali.ecommerceusb.model.Cart;
 import co.edu.usbcali.ecommerceusb.model.User;
@@ -30,28 +32,28 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse getCartById(Integer id) throws Exception {
+    public CartResponse getCartById(Integer id) {
         Cart cart = cartRepository.findById(id)
-                .orElseThrow(() -> new Exception("Carrito no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Carrito no encontrado"));
         return CartMapper.modelToCartResponse(cart);
     }
 
     @Override
-    public CartResponse createCart(CreateCartRequest request) throws Exception {
+    public CartResponse createCart(CreateCartRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new Exception("El usuario no existe para asociar al carrito"));
+                .orElseThrow(() -> new ResourceNotFoundException("El usuario no existe para asociar al carrito"));
 
         Cart cart = CartMapper.createCartRequestToCart(request, user);
         return CartMapper.modelToCartResponse(cartRepository.save(cart));
     }
 
     @Override
-    public CartResponse updateCart(Integer id, UpdateCartRequest request) throws Exception {
+    public CartResponse updateCart(Integer id, UpdateCartRequest request) {
         Cart cart = cartRepository.findById(id)
-                .orElseThrow(() -> new Exception("El carrito a actualizar no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El carrito a actualizar no existe"));
 
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new Exception("El usuario no existe para asociar al carrito"));
+                .orElseThrow(() -> new ResourceNotFoundException("El usuario no existe para asociar al carrito"));
 
         CartMapper.updateCartFromRequest(cart, request, user);
 
@@ -59,13 +61,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public DeleteCartResponse deleteCart(Integer id) throws Exception {
+    public DeleteCartResponse deleteCart(Integer id) {
         if (id == null || id <= 0) {
-            throw new Exception("Ingrese ID para eliminar");
+            throw new BadRequestException("Ingrese ID para eliminar");
         }
         Cart cart = cartRepository.findById(id)
                 .orElseThrow(() ->
-                        new Exception(String.format("No se encontró el carrito con id %d", id)));
+                        new ResourceNotFoundException(String.format("No se encontró el carrito con id %d", id)));
         cartRepository.delete(cart);
         return DeleteCartResponse.builder()
                 .message(String.format("Carrito con id %d eliminado con éxito", id))

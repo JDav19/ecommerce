@@ -41,8 +41,7 @@ public class PaymentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeletePaymentResponse> deletePayment(
-            @PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeletePaymentResponse> deletePayment(@PathVariable Integer id) {
         return new ResponseEntity<>(paymentService.deletePayment(id), HttpStatus.OK);
     }
 }

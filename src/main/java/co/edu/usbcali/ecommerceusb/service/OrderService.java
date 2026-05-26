@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface OrderService {
     List<OrderResponse> getOrders();
-    OrderResponse getOrderById(Integer id) throws Exception;
-    OrderResponse createOrder(CreateOrderRequest request) throws Exception;
-    OrderResponse updateOrder(Integer id, UpdateOrderRequest request) throws Exception;
-    DeleteOrderResponse deleteOrder(Integer id) throws Exception;
+    OrderResponse getOrderById(Integer id);
+    OrderResponse createOrder(CreateOrderRequest request);
+    OrderResponse updateOrder(Integer id, UpdateOrderRequest request);
+    DeleteOrderResponse deleteOrder(Integer id);
 }

@@ -4,6 +4,8 @@ import co.edu.usbcali.ecommerceusb.dto.request.CreatePaymentRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdatePaymentRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DeletePaymentResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.PaymentResponse;
+import co.edu.usbcali.ecommerceusb.exception.BadRequestException;
+import co.edu.usbcali.ecommerceusb.exception.ResourceNotFoundException;
 import co.edu.usbcali.ecommerceusb.mapper.PaymentMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.Payment;
@@ -33,14 +35,14 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentResponse findById(Integer id) {
         Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pago no encontrado con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Pago no encontrado con ID: " + id));
         return PaymentMapper.modelToResponse(payment);
     }
 
     @Override
     public PaymentResponse create(CreatePaymentRequest request) {
         Order order = orderRepository.findById(request.getOrderId())
-                .orElseThrow(() -> new RuntimeException("Orden no encontrada para el pago"));
+                .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada para el pago"));
 
         Payment payment = PaymentMapper.requestToModel(request, order);
         return PaymentMapper.modelToResponse(paymentRepository.save(payment));
@@ -49,22 +51,22 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentResponse update(Integer id, UpdatePaymentRequest request) {
         Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pago no encontrado con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Pago no encontrado con ID: " + id));
         if (request.getStatus() == null || request.getStatus().isBlank()) {
-            throw new RuntimeException("El estado del pago no puede estar vacío");
+            throw new BadRequestException("El estado del pago no puede estar vacío");
         }
         PaymentMapper.updateModelFromRequest(payment, request);
         return PaymentMapper.modelToResponse(paymentRepository.save(payment));
     }
 
     @Override
-    public DeletePaymentResponse deletePayment(Integer id) throws Exception {
+    public DeletePaymentResponse deletePayment(Integer id) {
         if (id == null || id <= 0) {
-            throw new Exception("Ingrese ID para eliminar");
+            throw new BadRequestException("Ingrese ID para eliminar");
         }
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() ->
-                        new Exception(String.format("No se encontró el pago con id %d", id)));
+                        new ResourceNotFoundException(String.format("No se encontró el pago con id %d", id)));
         paymentRepository.delete(payment);
         return DeletePaymentResponse.builder()
                 .message(String.format("Pago con id %d borrado con éxito", id))

@@ -11,5 +11,5 @@ public interface OrderItemService {
     OrderItemResponse findById(Integer id);
     OrderItemResponse create(CreateOrderItemRequest request);
     OrderItemResponse update(Integer id, UpdateOrderItemRequest request);
-    DeleteOrderItemResponse deleteOrderItem(Integer id) throws Exception;
+    DeleteOrderItemResponse deleteOrderItem(Integer id);
 }

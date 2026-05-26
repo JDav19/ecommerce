@@ -11,5 +11,5 @@ public interface ProductCategoryService {
     ProductCategoryResponse findById(Integer id);
     ProductCategoryResponse create(CreateProductCategoryRequest request);
     ProductCategoryResponse update(Integer id, UpdateProductCategoryRequest request);
-    DeleteProductCategoryResponse deleteProductCategory(Integer id) throws Exception;
+    DeleteProductCategoryResponse deleteProductCategory(Integer id);
 }

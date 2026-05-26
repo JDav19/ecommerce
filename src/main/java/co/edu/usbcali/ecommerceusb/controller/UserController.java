@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    // Inyección de dependencias de UserService
+
     @Autowired
     private UserService userService;
 
@@ -25,32 +25,28 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Integer id) throws Exception {
-        return new ResponseEntity<>(userService.getUserById(id),
-                HttpStatus.OK);
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Integer id) {
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) throws Exception {
-        return new ResponseEntity<>(userService.getUserByEmail(email),
-                HttpStatus.OK);
+    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) {
+        return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(
-            @RequestBody CreateUserRequest createUserRequest) throws Exception {
-        return new ResponseEntity<>(userService.createUser(createUserRequest),
-                HttpStatus.CREATED);
+    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest createUserRequest) {
+        return new ResponseEntity<>(userService.createUser(createUserRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@PathVariable Integer id,
-                                               @RequestBody UpdateUserRequest request) throws Exception {
+                                               @RequestBody UpdateUserRequest request) {
         return new ResponseEntity<>(userService.updateUser(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteUserResponse> deleteUser(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeleteUserResponse> deleteUser(@PathVariable Integer id) {
         return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.OK);
     }
 }

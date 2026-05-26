@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductResponse> getAllProducts();
-    ProductResponse getProductById(Integer id) throws Exception;
+    ProductResponse getProductById(Integer id);
     ProductResponse createProduct(CreateProductRequest request);
-    ProductResponse updateProduct(Integer id, UpdateProductRequest request) throws Exception;
-    DeleteProductResponse deleteProduct(Integer id) throws Exception;
+    ProductResponse updateProduct(Integer id, UpdateProductRequest request);
+    DeleteProductResponse deleteProduct(Integer id);
 }

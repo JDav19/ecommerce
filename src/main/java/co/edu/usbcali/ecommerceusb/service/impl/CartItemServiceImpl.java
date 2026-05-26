@@ -4,6 +4,8 @@ import co.edu.usbcali.ecommerceusb.dto.request.UpdateCartItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.CartItemResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateCartItemRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DeleteCartItemResponse;
+import co.edu.usbcali.ecommerceusb.exception.BadRequestException;
+import co.edu.usbcali.ecommerceusb.exception.ResourceNotFoundException;
 import co.edu.usbcali.ecommerceusb.mapper.CartItemMapper;
 import co.edu.usbcali.ecommerceusb.model.Cart;
 import co.edu.usbcali.ecommerceusb.model.CartItem;
@@ -42,12 +44,12 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItemResponse addProductToCart(CreateCartItemRequest request) throws Exception {
+    public CartItemResponse addProductToCart(CreateCartItemRequest request) {
         Cart cart = cartRepository.findById(request.getCartId())
-                .orElseThrow(() -> new Exception("El carrito no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El carrito no existe"));
 
         Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new Exception("El producto no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El producto no existe"));
 
         List<CartItem> existingItems = cartItemRepository.findByCartId(request.getCartId());
         Optional<CartItem> existingItem = existingItems.stream()
@@ -67,12 +69,12 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItemResponse updateQuantity(Integer id, UpdateCartItemRequest request) throws Exception {
+    public CartItemResponse updateQuantity(Integer id, UpdateCartItemRequest request) {
         CartItem cartItem = cartItemRepository.findById(id)
-                .orElseThrow(() -> new Exception("El item del carrito no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El item del carrito no existe"));
 
         if (request.getQuantity() == null || request.getQuantity() <= 0) {
-            throw new Exception("La cantidad debe ser mayor a cero");
+            throw new BadRequestException("La cantidad debe ser mayor a cero");
         }
 
         CartItemMapper.updateCartItemFromRequest(cartItem, request);
@@ -81,13 +83,13 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public DeleteCartItemResponse deleteCartItem(Integer id) throws Exception {
+    public DeleteCartItemResponse deleteCartItem(Integer id) {
         if (id == null || id <= 0) {
-            throw new Exception("Ingrese ID para eliminar");
+            throw new BadRequestException("Ingrese ID para eliminar");
         }
         CartItem cartItem = cartItemRepository.findById(id)
                 .orElseThrow(() ->
-                        new Exception(String.format("No se encontró el item del carrito con id %d", id)));
+                        new ResourceNotFoundException(String.format("No se encontró el item del carrito con id %d", id)));
         cartItemRepository.delete(cartItem);
         return DeleteCartItemResponse.builder()
                 .message(String.format("Item del carrito con id %d eliminado con éxito", id))

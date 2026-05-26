@@ -4,6 +4,8 @@ import co.edu.usbcali.ecommerceusb.dto.request.UpdateInventoryRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DeleteInventoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.InventoryResponse;
 import co.edu.usbcali.ecommerceusb.dto.request.CreateInventoryRequest;
+import co.edu.usbcali.ecommerceusb.exception.BadRequestException;
+import co.edu.usbcali.ecommerceusb.exception.ResourceNotFoundException;
 import co.edu.usbcali.ecommerceusb.mapper.InventoryMapper;
 import co.edu.usbcali.ecommerceusb.model.Inventory;
 import co.edu.usbcali.ecommerceusb.model.Product;
@@ -31,21 +33,21 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public InventoryResponse getById(Integer id) throws Exception {
+    public InventoryResponse getById(Integer id) {
         Inventory inventory = inventoryRepository.findById(id)
-                .orElseThrow(() -> new Exception("No existe un registro de inventario con ese ID"));
+                .orElseThrow(() -> new ResourceNotFoundException("No existe un registro de inventario con ese ID"));
         return InventoryMapper.modelToInventoryResponse(inventory);
     }
 
     @Override
-    public InventoryResponse getByProductId(Integer productId) throws Exception {
+    public InventoryResponse getByProductId(Integer productId) {
         Inventory inventory = inventoryRepository.findByProductId(productId)
-                .orElseThrow(() -> new Exception("No hay registro de inventario para este producto"));
+                .orElseThrow(() -> new ResourceNotFoundException("No hay registro de inventario para este producto"));
         return InventoryMapper.modelToInventoryResponse(inventory);
     }
 
     @Override
-    public InventoryResponse updateStock(CreateInventoryRequest request) throws Exception {
+    public InventoryResponse updateStock(CreateInventoryRequest request) {
         Inventory inventory = inventoryRepository.findByProductId(request.getProductId())
                 .orElse(null);
 
@@ -54,7 +56,7 @@ public class InventoryServiceImpl implements InventoryService {
             inventory.setUpdatedAt(OffsetDateTime.now());
         } else {
             Product product = productRepository.findById(request.getProductId())
-                    .orElseThrow(() -> new Exception("El producto no existe"));
+                    .orElseThrow(() -> new ResourceNotFoundException("El producto no existe"));
             inventory = InventoryMapper.createRequestToModel(request, product);
         }
 
@@ -62,24 +64,24 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public InventoryResponse updateInventory(Integer id, UpdateInventoryRequest request) throws Exception {
+    public InventoryResponse updateInventory(Integer id, UpdateInventoryRequest request) {
         Inventory inventory = inventoryRepository.findById(id)
-                .orElseThrow(() -> new Exception("El registro de inventario no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El registro de inventario no existe"));
         if (request.getStock() < 0) {
-            throw new Exception("El stock no puede ser menor a cero");
+            throw new BadRequestException("El stock no puede ser menor a cero");
         }
         InventoryMapper.updateInventoryFromRequest(inventory, request);
         return InventoryMapper.modelToInventoryResponse(inventoryRepository.save(inventory));
     }
 
     @Override
-    public DeleteInventoryResponse deleteInventory(Integer id) throws Exception {
+    public DeleteInventoryResponse deleteInventory(Integer id) {
         if (id == null || id <= 0) {
-            throw new Exception("Ingrese ID para eliminar");
+            throw new BadRequestException("Ingrese ID para eliminar");
         }
         Inventory inventory = inventoryRepository.findById(id)
                 .orElseThrow(() ->
-                        new Exception(String.format("No se encontró el inventario con id %d", id)));
+                        new ResourceNotFoundException(String.format("No se encontró el inventario con id %d", id)));
         inventoryRepository.delete(inventory);
         return DeleteInventoryResponse.builder()
                 .message(String.format("Inventario con id %d removido exitosamente", id))

@@ -25,25 +25,23 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderResponse> getOrderById(@PathVariable Integer id) throws Exception {
-        return new ResponseEntity<>(orderService.getOrderById(id),
-                HttpStatus.OK);
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable Integer id) {
+        return new ResponseEntity<>(orderService.getOrderById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest request) throws Exception {
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest request) {
         return new ResponseEntity<>(orderService.createOrder(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> updateOrder(@PathVariable Integer id,
-                                                     @RequestBody UpdateOrderRequest request) throws Exception {
+                                                     @RequestBody UpdateOrderRequest request) {
         return new ResponseEntity<>(orderService.updateOrder(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteOrderResponse> deleteOrder(
-            @PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeleteOrderResponse> deleteOrder(@PathVariable Integer id) {
         return new ResponseEntity<>(orderService.deleteOrder(id), HttpStatus.OK);
     }
 }

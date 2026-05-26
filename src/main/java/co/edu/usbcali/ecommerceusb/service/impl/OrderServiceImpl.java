@@ -4,6 +4,8 @@ import co.edu.usbcali.ecommerceusb.dto.request.CreateOrderRequest;
 import co.edu.usbcali.ecommerceusb.dto.request.UpdateOrderRequest;
 import co.edu.usbcali.ecommerceusb.dto.response.DeleteOrderResponse;
 import co.edu.usbcali.ecommerceusb.dto.response.OrderResponse;
+import co.edu.usbcali.ecommerceusb.exception.BadRequestException;
+import co.edu.usbcali.ecommerceusb.exception.ResourceNotFoundException;
 import co.edu.usbcali.ecommerceusb.mapper.OrderMapper;
 import co.edu.usbcali.ecommerceusb.model.Order;
 import co.edu.usbcali.ecommerceusb.model.User;
@@ -32,45 +34,45 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse getOrderById(Integer id) throws Exception {
+    public OrderResponse getOrderById(Integer id) {
         if (id == null || id <= 0) {
-            throw new Exception("Debe ingresar un ID válido para buscar la orden");
+            throw new BadRequestException("Debe ingresar un ID válido para buscar la orden");
         }
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new Exception(String.format("Orden no encontrada con el id: %d", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Orden no encontrada con el id: %d", id)));
         return OrderMapper.modelToResponse(order);
     }
 
     @Override
-    public OrderResponse createOrder(CreateOrderRequest request) throws Exception {
-        if (Objects.isNull(request)) throw new Exception("El request no puede ser nulo");
+    public OrderResponse createOrder(CreateOrderRequest request) {
+        if (Objects.isNull(request)) throw new BadRequestException("El request no puede ser nulo");
 
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new Exception("El usuario no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El usuario no existe"));
 
         Order order = OrderMapper.requestToModel(request, user);
         return OrderMapper.modelToResponse(orderRepository.save(order));
     }
 
     @Override
-    public OrderResponse updateOrder(Integer id, UpdateOrderRequest request) throws Exception {
+    public OrderResponse updateOrder(Integer id, UpdateOrderRequest request) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new Exception(String.format("La orden con ID %d no existe", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("La orden con ID %d no existe", id)));
         if (request.getTotalAmount() == null || request.getTotalAmount().compareTo(java.math.BigDecimal.ZERO) < 0) {
-            throw new Exception("El monto total no puede ser negativo o nulo");
+            throw new BadRequestException("El monto total no puede ser negativo o nulo");
         }
         OrderMapper.updateOrderFromRequest(order, request);
         return OrderMapper.modelToResponse(orderRepository.save(order));
     }
 
     @Override
-    public DeleteOrderResponse deleteOrder(Integer id) throws Exception {
+    public DeleteOrderResponse deleteOrder(Integer id) {
         if (id == null || id <= 0) {
-            throw new Exception("Ingrese ID para eliminar");
+            throw new BadRequestException("Ingrese ID para eliminar");
         }
         Order order = orderRepository.findById(id)
                 .orElseThrow(() ->
-                        new Exception(String.format("No se encontró la orden con id %d", id)));
+                        new ResourceNotFoundException(String.format("No se encontró la orden con id %d", id)));
         orderRepository.delete(order);
         return DeleteOrderResponse.builder()
                 .message(String.format("Orden con id %d eliminada con éxito", id))

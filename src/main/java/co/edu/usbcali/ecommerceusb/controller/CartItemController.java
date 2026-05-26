@@ -30,19 +30,18 @@ public class CartItemController {
     }
 
     @PostMapping
-    public ResponseEntity<CartItemResponse> addProduct(@RequestBody CreateCartItemRequest request) throws Exception {
+    public ResponseEntity<CartItemResponse> addProduct(@RequestBody CreateCartItemRequest request) {
         return new ResponseEntity<>(cartItemService.addProductToCart(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CartItemResponse> updateQuantity(@PathVariable Integer id,
-                                                           @RequestBody UpdateCartItemRequest request) throws Exception {
+                                                           @RequestBody UpdateCartItemRequest request) {
         return new ResponseEntity<>(cartItemService.updateQuantity(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteCartItemResponse> deleteCartItem(
-            @PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeleteCartItemResponse> deleteCartItem(@PathVariable Integer id) {
         return new ResponseEntity<>(cartItemService.deleteCartItem(id), HttpStatus.OK);
     }
 }

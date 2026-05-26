@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface InventoryService {
     List<InventoryResponse> getAllInventory();
-    InventoryResponse getById(Integer id) throws Exception;
-    InventoryResponse getByProductId(Integer productId) throws Exception;
-    InventoryResponse updateStock(CreateInventoryRequest request) throws Exception;
-    InventoryResponse updateInventory(Integer id, UpdateInventoryRequest request) throws Exception;
-    DeleteInventoryResponse deleteInventory(Integer id) throws Exception;
+    InventoryResponse getById(Integer id);
+    InventoryResponse getByProductId(Integer productId);
+    InventoryResponse updateStock(CreateInventoryRequest request);
+    InventoryResponse updateInventory(Integer id, UpdateInventoryRequest request);
+    DeleteInventoryResponse deleteInventory(Integer id);
 }

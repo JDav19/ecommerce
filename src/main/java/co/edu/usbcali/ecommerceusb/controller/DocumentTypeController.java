@@ -22,10 +22,11 @@ public class DocumentTypeController {
     @Autowired
     private DocumentTypeRepository documentTypeRepository;
 
+    @Autowired
+    private DocumentTypeService documentTypeService;
+
     @GetMapping("/all")
     public List<DocumentTypeResponse> getAll() {
-        // Invoca el Mapper para convertir la lista de DocumentType
-        // a una lista de DocumentTypeResponse
         return DocumentTypeMapper.modelToDocumentTypeResponseList(
                 documentTypeRepository.findAll()
         );
@@ -33,48 +34,30 @@ public class DocumentTypeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DocumentTypeResponse> getById(@PathVariable Integer id) {
-        // Consultar el Document Type en la base de datos
         DocumentType documentType = documentTypeRepository.getReferenceById(id);
-
-        // Mapear o convertir al DTO (Response) DocumentTypeResponse
-        // Invocando el Mapper para convertir
         DocumentTypeResponse documentTypeResponse =
                 DocumentTypeMapper.modelToDocumentTypeResponse(documentType);
-
-        // Retornar el ResponseEntity con el documentTypeResponse
-        return new ResponseEntity<>(
-                documentTypeResponse,
-                HttpStatus.OK
-        );
+        return new ResponseEntity<>(documentTypeResponse, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<DocumentTypeResponse> create(@RequestBody CreateDocumentTypeRequest request) {
-        // 1. Usamos el Mapper para convertir el DTO de entrada al Modelo
         DocumentType documentType = DocumentTypeMapper.createRequestToModel(request);
-
-        // 2. Guardamos directamente usando el repository
         documentType = documentTypeRepository.save(documentType);
-
-        // 3. Convertimos el resultado a Response y respondemos
         return new ResponseEntity<>(
                 DocumentTypeMapper.modelToDocumentTypeResponse(documentType),
                 HttpStatus.CREATED
         );
     }
 
-    @Autowired
-    private DocumentTypeService documentTypeService;
-
     @PutMapping("/{id}")
     public ResponseEntity<DocumentTypeResponse> update(@PathVariable Integer id,
-                                                       @RequestBody UpdateDocumentTypeRequest request) throws Exception {
+                                                       @RequestBody UpdateDocumentTypeRequest request) {
         return new ResponseEntity<>(documentTypeService.updateDocumentType(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteDocumentTypeResponse> deleteDocumentType(
-            @PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeleteDocumentTypeResponse> deleteDocumentType(@PathVariable Integer id) {
         return new ResponseEntity<>(documentTypeService.deleteDocumentType(id), HttpStatus.OK);
     }
 }

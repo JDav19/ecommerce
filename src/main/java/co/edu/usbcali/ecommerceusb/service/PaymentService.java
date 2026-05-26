@@ -11,5 +11,5 @@ public interface PaymentService {
     PaymentResponse findById(Integer id);
     PaymentResponse create(CreatePaymentRequest request);
     PaymentResponse update(Integer id, UpdatePaymentRequest request);
-    DeletePaymentResponse deletePayment(Integer id) throws Exception;
+    DeletePaymentResponse deletePayment(Integer id);
 }

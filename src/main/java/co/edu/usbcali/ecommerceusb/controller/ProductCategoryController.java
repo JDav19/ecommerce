@@ -39,10 +39,9 @@ public class ProductCategoryController {
                                                           @RequestBody UpdateProductCategoryRequest request) {
         return ResponseEntity.ok(productCategoryService.update(id, request));
     }
-    
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteProductCategoryResponse> deleteProductCategory(
-            @PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeleteProductCategoryResponse> deleteProductCategory(@PathVariable Integer id) {
         return new ResponseEntity<>(productCategoryService.deleteProductCategory(id), HttpStatus.OK);
     }
 }

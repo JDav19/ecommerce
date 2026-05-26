@@ -41,8 +41,7 @@ public class OrderItemController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteOrderItemResponse> deleteOrderItem(
-            @PathVariable Integer id) throws Exception {
+    public ResponseEntity<DeleteOrderItemResponse> deleteOrderItem(@PathVariable Integer id) {
         return new ResponseEntity<>(orderItemService.deleteOrderItem(id), HttpStatus.OK);
     }
 }

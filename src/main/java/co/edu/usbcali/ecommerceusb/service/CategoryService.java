@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface CategoryService {
     List<CategoryResponse> getAllCategories();
-    CategoryResponse getCategoryById(Integer id) throws Exception;
-    CategoryResponse createCategory(CreateCategoryRequest request) throws Exception;
-    CategoryResponse updateCategory(Integer id, UpdateCategoryRequest request) throws Exception;
-    DeleteCategoryResponse deleteCategory(Integer id) throws Exception;
+    CategoryResponse getCategoryById(Integer id);
+    CategoryResponse createCategory(CreateCategoryRequest request);
+    CategoryResponse updateCategory(Integer id, UpdateCategoryRequest request);
+    DeleteCategoryResponse deleteCategory(Integer id);
 }
